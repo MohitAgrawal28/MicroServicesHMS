@@ -40,7 +40,7 @@ services:
     rootDir: apigatewayservice/apigateway
     dockerfilePath: ./Dockerfile
     dockerContext: .
-    healthCheckPath: /auth/test
+    healthCheckPath: /health
     envVars:
       - key: EUREKA_CLIENT_ENABLED
         value: false
