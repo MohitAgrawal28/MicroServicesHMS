@@ -120,8 +120,8 @@ function App() {
       <section className="hero-panel">
         <div className="topbar">
           <div>
-            <p className="eyebrow">CareBridge Nexus</p>
-            <h1>Clinical Operations Hub</h1>
+            <p className="eyebrow">MediTrack</p>
+            <h1>Hospital Dashboard</h1>
             <p className="hero-copy">
               Monitor gateway routing, authenticate through JWT, and manage
               patient records from one working console.

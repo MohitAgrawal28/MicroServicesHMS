@@ -1,10 +1,10 @@
-# CareBridge Nexus
+# MediTrack
 
-CareBridge Nexus is a Hospital Management System built with a microservices architecture. The project uses Spring Boot services for backend capabilities, Eureka for service discovery, an API Gateway for routing and JWT validation, MySQL for persistence, and a React + Vite frontend for the user interface.
+MediTrack is a Hospital Management System built with a microservices architecture. The project uses Spring Boot services for backend capabilities, Eureka for service discovery, an API Gateway for routing and JWT validation, MySQL for persistence, and a React + Vite frontend for the user interface.
 
 ## Project Overview
 
-CareBridge Nexus is organized as independent services that communicate through service discovery and gateway routing.
+MediTrack is organized as independent services that communicate through service discovery and gateway routing.
 
 ```text
 React Frontend
@@ -53,7 +53,7 @@ Eureka Server :8761
 - Patient listing
 - Add patient by name and disease
 - Frontend session reset on page refresh
-- Responsive CareBridge Nexus dashboard UI
+- Responsive MediTrack dashboard UI
 
 ## Repository Structure
 
@@ -104,6 +104,62 @@ hms_patient
 Both services use Hibernate `ddl-auto=update`, so tables are created/updated automatically when the services start.
 
 ## Running The Project
+
+## Running With Docker
+
+Docker Compose can start the complete system with one command:
+
+- MySQL
+- Eureka Server
+- Auth Service
+- Patient Service
+- API Gateway
+- React frontend
+
+Make sure Docker Desktop is running, then run this from the repository root:
+
+```bash
+docker compose up --build
+```
+
+Open the app:
+
+```text
+Frontend: http://localhost:5173
+Gateway:  http://localhost:8080
+Eureka:   http://localhost:8761
+```
+
+Stop all containers:
+
+```bash
+docker compose down
+```
+
+Stop all containers and remove the MySQL volume:
+
+```bash
+docker compose down -v
+```
+
+Inside Docker, services communicate by Compose service name instead of `localhost`.
+
+Examples:
+
+```text
+Eureka client URL: http://eureka-server:8761/eureka/
+MySQL URL: jdbc:mysql://mysql:3306/hms_patient
+```
+
+The frontend still calls the gateway through:
+
+```text
+http://localhost:8080
+```
+
+because the browser runs on your host machine and the gateway port is exposed by Docker.
+
+## Running Manually
 
 Run services in this order.
 
@@ -334,6 +390,5 @@ npm run preview
 - Add patient update and delete operations
 - Add role-based access control
 - Add appointment, doctor, and billing services
-- Add Docker Compose for one-command startup
 - Add centralized configuration service
 - Add backend and frontend test suites
