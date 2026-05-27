@@ -1,0 +1,66 @@
+services:
+  - type: web
+    name: meditrack-auth-service
+    runtime: docker
+    plan: free
+    rootDir: authservice
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /test
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: meditrack-postgres
+          property: connectionString
+      - key: EUREKA_CLIENT_ENABLED
+        value: false
+      - key: JWT_SECRET
+        value: YourSuperSecretKeyForJWTTokenGeneration1234567890
+
+  - type: web
+    name: meditrack-patient-service
+    runtime: docker
+    plan: free
+    rootDir: patientservice
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /test
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: meditrack-postgres
+          property: connectionString
+      - key: EUREKA_CLIENT_ENABLED
+        value: false
+
+  - type: web
+    name: meditrack-api-gateway
+    runtime: docker
+    plan: free
+    rootDir: apigatewayservice/apigateway
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /auth/test
+    envVars:
+      - key: EUREKA_CLIENT_ENABLED
+        value: false
+      - key: AUTH_SERVICE_HOSTPORT
+        fromService:
+          type: web
+          name: meditrack-auth-service
+          property: hostport
+      - key: PATIENT_SERVICE_HOSTPORT
+        fromService:
+          type: web
+          name: meditrack-patient-service
+          property: hostport
+      - key: JWT_SECRET
+        value: YourSuperSecretKeyForJWTTokenGeneration1234567890
+      - key: ALLOWED_ORIGINS
+        value: http://localhost:5173,http://127.0.0.1:5173,https://*.vercel.app
+
+databases:
+  - name: meditrack-postgres
+    databaseName: meditrack_hms
+    user: meditrack_user
+    plan: free

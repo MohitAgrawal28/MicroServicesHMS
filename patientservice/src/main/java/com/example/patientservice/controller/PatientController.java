@@ -19,6 +19,11 @@ public class PatientController {
         this.patientRepository = patientRepository;
     }
 
+    @GetMapping("/")
+    public String home() {
+        return "Patient Service Running";
+    }
+
     @GetMapping("/test")
     public String test() {
         return "Patient Service Running";

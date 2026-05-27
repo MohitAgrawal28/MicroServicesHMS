@@ -2,6 +2,7 @@ package com.example.apigateway;
 
 import java.security.Key;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jwts;
@@ -10,8 +11,11 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtil {
 
-    // MUST be the raw secret key string used by Auth Service, NOT the generated token!
-    public static final String SECRET = "YourSuperSecretKeyForJWTTokenGeneration1234567890";
+    private final String secret;
+
+    public JwtUtil(@Value("${jwt.secret:YourSuperSecretKeyForJWTTokenGeneration1234567890}") String secret) {
+        this.secret = secret;
+    }
 
     public void validateToken(final String token) {
         Jwts.parser()
@@ -21,7 +25,7 @@ public class JwtUtil {
     }
 
     private Key getSignKey() {
-        byte[] keyBytes = SECRET.getBytes();
+        byte[] keyBytes = secret.getBytes();
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
