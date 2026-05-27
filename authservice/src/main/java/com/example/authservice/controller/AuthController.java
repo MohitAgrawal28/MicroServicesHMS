@@ -18,12 +18,12 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @GetMapping("/test")
+    @GetMapping({"/", "/test", "/auth/test"})
     public String test() {
         return authService.test();
     }
 
-    @PostMapping("/login")
+    @PostMapping({"/login", "/auth/login"})
     public String login(@RequestBody Map<String, String> loginRequest) {
         String username = loginRequest.get("username");
         String password = loginRequest.get("password");

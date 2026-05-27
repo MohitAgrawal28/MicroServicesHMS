@@ -20,8 +20,10 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Allow public access to all authentication, registration, and testing endpoints
                 .requestMatchers(
+                    "/",
                     "/login", 
                     "/test", 
+                    "/db-test",
                     "/auth/login", 
                     "/auth/register", 
                     "/auth/test",
