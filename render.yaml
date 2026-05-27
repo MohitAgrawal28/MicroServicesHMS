@@ -44,16 +44,10 @@ services:
     envVars:
       - key: EUREKA_CLIENT_ENABLED
         value: false
-      - key: AUTH_SERVICE_HOSTPORT
-        fromService:
-          type: web
-          name: meditrack-auth-service
-          property: hostport
-      - key: PATIENT_SERVICE_HOSTPORT
-        fromService:
-          type: web
-          name: meditrack-patient-service
-          property: hostport
+      - key: AUTH_SERVICE_URL
+        value: https://meditrack-auth-service.onrender.com
+      - key: PATIENT_SERVICE_URL
+        value: https://meditrack-patient-service.onrender.com
       - key: JWT_SECRET
         value: YourSuperSecretKeyForJWTTokenGeneration1234567890
       - key: ALLOWED_ORIGINS
